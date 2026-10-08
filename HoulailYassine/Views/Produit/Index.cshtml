@@ -1,0 +1,53 @@
+﻿@model List<HoulailYassine.Models.ProduitListViewModel>
+
+@{
+    ViewData["Title"] = "Nos Produits";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="d-inline-block align-middle me-3 mb-0">Nos Produits</h2>
+            <a asp-controller="Panier" asp-action="Index" class="btn btn-outline-success">
+                🛒 Mon Panier
+            </a>
+        </div>
+
+        <span class="text-muted">Bienvenue, @Context.Session.GetString("UserName") !</span>
+    </div>
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="row">
+            @foreach (var produit in Model)
+            {
+                <div class="col-md-4 col-sm-6 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">@produit.Titre</h5>
+                            <p class="card-text text-muted">@produit.Description</p>
+                            <p class="text-primary fw-bold fs-4">@produit.Prix.ToString("C")</p>
+                        </div>
+
+                        <div class="card-footer bg-transparent border-top-0 pb-3">
+                            <a asp-controller="Panier"
+                               asp-action="Ajouter"
+                               asp-route-id="@produit.Id"
+                               class="btn btn-primary w-100">
+                                🛒 Ajouter au panier
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info text-center py-5" role="alert">
+            <i class="bi bi-info-circle fs-1 mb-3"></i>
+            <h4>Aucun produit disponible pour le moment.</h4>
+            <p class="mb-0">Revenez plus tard pour découvrir nos nouveautés.</p>
+        </div>
+    }
+</div>

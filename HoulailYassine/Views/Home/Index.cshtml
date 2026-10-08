@@ -1,0 +1,164 @@
+﻿@{
+    ViewData["Title"] = "Welcome - Login or Sign Up";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10 col-lg-8">
+            <!-- Welcome Header -->
+            <div class="text-center mb-5">
+                <h1 class="display-4 mb-3">Welcome to EGlovvoo</h1>
+                <p class="lead text-muted">Please login or create an account to continue</p>
+            </div>
+
+            <!-- Tabs Navigation -->
+            <ul class="nav nav-tabs nav-justified mb-4" id="authTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="login-tab" data-bs-toggle="tab" data-bs-target="#login" type="button" role="tab" aria-controls="login" aria-selected="true">
+                        Login
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="signup-tab" data-bs-toggle="tab" data-bs-target="#signup" type="button" role="tab" aria-controls="signup" aria-selected="false">
+                        Sign Up
+                    </button>
+                </li>
+            </ul>
+
+            <!-- Tab Content -->
+            <div class="tab-content" id="authTabsContent">
+                <!-- Login Tab -->
+                <div class="tab-pane fade show active" id="login" role="tabpanel" aria-labelledby="login-tab">
+                    <div class="card shadow-lg border-0">
+                        <div class="card-body p-5">
+                            <h2 class="card-title text-center mb-4">Login</h2>
+                            
+                            <form asp-action="Login" asp-controller="Home" method="post">
+                                @Html.AntiForgeryToken()
+                                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                                
+                                @if (TempData["LoginError"] != null)
+                                {
+                                    <div class="alert alert-danger" role="alert">
+                                        @TempData["LoginError"]
+                                    </div>
+                                }
+                                
+                                <div class="mb-3">
+                                    <label for="loginEmail" class="form-label">Email</label>
+                                    <input type="email" name="Email" id="loginEmail" class="form-control" placeholder="Enter your email" required />
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="loginPassword" class="form-label">Password</label>
+                                    <input type="password" name="Password" id="loginPassword" class="form-control" placeholder="Enter your password" required />
+                                </div>
+
+                                <div class="mb-3 form-check">
+                                    <input type="checkbox" name="RememberMe" id="rememberMe" class="form-check-input" />
+                                    <label class="form-check-label" for="rememberMe">Remember me</label>
+                                </div>
+
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-primary btn-lg">Login</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sign Up Tab -->
+                <div class="tab-pane fade" id="signup" role="tabpanel" aria-labelledby="signup-tab">
+                    <div class="card shadow-lg border-0">
+                        <div class="card-body p-5">
+                            <h2 class="card-title text-center mb-4">Create Account</h2>
+                            
+                            <form asp-action="SignUp" asp-controller="Home" method="post">
+                                @Html.AntiForgeryToken()
+                                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                                
+                                @if (TempData["SignUpError"] != null)
+                                {
+                                    <div class="alert alert-danger" role="alert">
+                                        @TempData["SignUpError"]
+                                    </div>
+                                }
+                                
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="signupNom" class="form-label">First Name <span class="text-danger">*</span></label>
+                                        <input type="text" name="Nom" id="signupNom" class="form-control" placeholder="Enter your first name" required />
+                                    </div>
+
+                                    <div class="col-md-6 mb-3">
+                                        <label for="signupPrenom" class="form-label">Last Name</label>
+                                        <input type="text" name="Prenom" id="signupPrenom" class="form-control" placeholder="Enter your last name" />
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="signupPhone" class="form-label">Phone Number</label>
+                                    <input type="text" name="NumdeTelephone" id="signupPhone" class="form-control" placeholder="Enter your phone number" />
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="signupEmail" class="form-label">Email <span class="text-danger">*</span></label>
+                                    <input type="email" name="EMail" id="signupEmail" class="form-control" placeholder="Enter your email" required />
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="signupPassword" class="form-label">Password <span class="text-danger">*</span></label>
+                                    <input type="password" name="MotPasse" id="signupPassword" class="form-control" placeholder="Enter your password" required minlength="6" />
+                                </div>
+
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-primary btn-lg">Sign Up</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Handle form submission errors and switch tabs if needed
+        document.addEventListener('DOMContentLoaded', function() {
+            @if (TempData["ShowSignUp"] as bool? == true)
+            {
+                <text>
+                var signupTab = document.getElementById('signup-tab');
+                var signupPane = document.getElementById('signup');
+                var loginTab = document.getElementById('login-tab');
+                var loginPane = document.getElementById('login');
+                
+                if (signupTab && signupPane && loginTab && loginPane) {
+                    signupTab.classList.add('active');
+                    signupPane.classList.add('show', 'active');
+                    loginTab.classList.remove('active');
+                    loginPane.classList.remove('show', 'active');
+                }
+                </text>
+            }
+            @if (TempData["ShowLogin"] as bool? == true)
+            {
+                <text>
+                var loginTab = document.getElementById('login-tab');
+                var loginPane = document.getElementById('login');
+                var signupTab = document.getElementById('signup-tab');
+                var signupPane = document.getElementById('signup');
+                
+                if (loginTab && loginPane && signupTab && signupPane) {
+                    loginTab.classList.add('active');
+                    loginPane.classList.add('show', 'active');
+                    signupTab.classList.remove('active');
+                    signupPane.classList.remove('show', 'active');
+                }
+                </text>
+            }
+        });
+    </script>
+}
